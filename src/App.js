@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Suspense} from 'react';
+import Helmet from 'react-helmet';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from './routes';
+import Loader from './components/Loader/Loader';
+import ErrorBoundary from './utils/ErrorBoundary/ErrorBoundary';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <>
+            <Helmet>
+                <title>Quizzler</title>
+            </Helmet>
+
+            <ErrorBoundary>
+                <Router>
+                    <Suspense fallback={<Loader/>}>
+                        {Routes}
+                    </Suspense>
+                </Router>
+            </ErrorBoundary>
+        </>
+    );
 }
 
 export default App;
