@@ -32,6 +32,7 @@ export default function auth_reducer(state = initialState, action) {
             localStorage.removeItem('isAuth');
             localStorage.removeItem('accountName');
             localStorage.removeItem('accountEmail');
+            localStorage.removeItem('previousQuizzes');
             return {
                 ...state,
                 isAuth: false,
