@@ -99,7 +99,7 @@ const SetupQuiz = props => {
 
                 <div className="row mt-4">
                     <div className="col-md-4 offset-md-4">
-                        <button className="btn btn-success w-100" onClick={setupQuiz}>{isLoaded ? 'Start' : <Spinner size="sm" color="light" />}</button>
+                        <button className="btn btn-success w-100" disabled={count < 10 || count > 25} onClick={setupQuiz}>{isLoaded ? 'Start' : <Spinner size="sm" color="light" />}</button>
                     </div>
                 </div>
             
