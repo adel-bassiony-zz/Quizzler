@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from "react-router-dom";
-import moment from 'moment';
 import { Progress } from 'reactstrap';
 import QuizResult from '../QuizResult/QuizResult';
 import Header from '../Header/Header';
@@ -22,12 +21,21 @@ const Quiz = props => {
     })
     const [answer, setAnswer] = useState('')
     const [showQuizResult, setShowQuizResult] = useState(false)
-    const [startTime, setStartTime] = useState(new Date())
+    
+    let startTime = new Date()
 
     useEffect(() => {
+        props.saveCorrectAnswersHandler(0)
         getNextQuestion()
     }, [])
 
+    // Difference Betwen Dates
+    function diff_hours(dt2, dt1) {
+        var diff = (dt2.getTime() - dt1.getTime()) / 1000;
+        return Math.abs(Math.round(diff));
+    }
+    
+    
     // Get Next Question
     const getNextQuestion = () => {
         
@@ -35,22 +43,17 @@ const Quiz = props => {
             setCurrentQuestionID(currentQuestionID + 1)
         }
 
-        setCurrentQuestion(props.questionsList[currentQuestionID])
-
         if (answer === currentQuestion.correct_answer) {
             props.saveCorrectAnswersHandler(props.correctAnswers + 1)
         }
 
-        if (currentQuestionID == props.questionsCount) {
+        setCurrentQuestion(props.questionsList[currentQuestionID])
+
+        if (currentQuestionID == props.questionsList.length) {
             finalQuizResult()
         }
+        
         setAnswer("")
-    }
-
-    // Difference Betwen Dates
-    function diff_hours(dt2, dt1) {
-        var diff = (dt2.getTime() - dt1.getTime()) / 1000;
-        return Math.abs(Math.round(diff));
     }
     
     // Final Result
