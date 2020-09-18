@@ -21,6 +21,7 @@ const Quiz = props => {
     })
     const [answer, setAnswer] = useState('')
     const [showQuizResult, setShowQuizResult] = useState(false)
+    const [isFinished, setIsFinished] = useState(false)
     
     let startTime = new Date()
 
@@ -28,6 +29,12 @@ const Quiz = props => {
         props.saveCorrectAnswersHandler(0)
         getNextQuestion()
     }, [])
+
+    useEffect(() => {
+        if (isFinished) {
+            finalQuizResult()
+        }
+    }, [isFinished])
 
     // Difference Betwen Dates
     function diff_hours(dt2, dt1) {
@@ -50,7 +57,8 @@ const Quiz = props => {
         setCurrentQuestion(props.questionsList[currentQuestionID])
 
         if (currentQuestionID == props.questionsList.length) {
-            finalQuizResult()
+            setShowQuizResult(true)
+            setIsFinished(true)
         }
         
         setAnswer("")
@@ -58,7 +66,6 @@ const Quiz = props => {
     
     // Final Result
     const finalQuizResult = () => {
-        setShowQuizResult(true)
 
         let currentQuiz = {
             "date": new Date(),
